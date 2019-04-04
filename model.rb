@@ -24,11 +24,21 @@ def register_user(params)
     password = BCrypt::Password.create(params["password"])
 
     db = connect()
+    
+    result = db.execute("SELECT id FROM Users WHERE name = ?",name)
+    if result.length > 0
+        return {
+            error: true,
+            message: "User already exists"
+        }
+    end
 
     db.execute("INSERT INTO Users (name,password) VALUES (?,?)",name,password)
     result = db.execute("SELECT id FROM Users WHERE name = ?",name)
 
-    p result
-    session[:id] = result.first.first
-    redirect('/')
+    return {
+        error: false,
+        data: result.first.first
+    }
+    
 end

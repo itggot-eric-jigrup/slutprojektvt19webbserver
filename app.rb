@@ -7,6 +7,7 @@ require 'bcrypt'
 enable :sessions
 
     get('/') do
+
         slim(:index)
     end
 
@@ -31,4 +32,11 @@ enable :sessions
     post('/registrering') do
         register = register_user(params)
         
+        if register[:error] == false
+            session[:id] = register[:data]
+            redirect('/')
+        else
+            session[:error] = register[:message]
+            redirect('/')
+        end
     end

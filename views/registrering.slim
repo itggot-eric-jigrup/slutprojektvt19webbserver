@@ -1,4 +1,6 @@
 form action="/registrering" method="POST"
     input name="name" type="text"
+    - if session[:error]
+        p = session[:error]
     input name="password" type="password"
     input value="Submit" type="submit"
