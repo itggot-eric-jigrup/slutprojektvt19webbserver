@@ -9,3 +9,26 @@ enable :sessions
     get('/') do
         slim(:index)
     end
+
+    get('/login') do
+        slim(:login)
+    end
+
+    post('/login') do
+        username = login_user(params)  
+        if username != false
+            session[:username] = username
+            redirect('/home')
+        else 
+            redirect('/login')
+        end
+    end
+
+    get('/registrering') do
+        slim(:registrering)
+    end
+
+    post('/registrering') do
+        register = register_user(params)
+        
+    end
