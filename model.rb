@@ -10,10 +10,11 @@ def login_user(params)
 
     db = connect()
     
-    password = db.execute("SELECT password FROM Users WHERE name = ?", username)
-    password = password.first["password"]
+    result = db.execute("SELECT id, password FROM Users WHERE name = ?", username).first
+    #{"id" => 1, "password" = 23456768}
+    password = result["password"]
     if BCrypt::Password.new(password) == pswrd
-        return username
+        return result["id"]
     else
         return false
     end
@@ -41,4 +42,17 @@ def register_user(params)
         data: result.first.first
     }
     
+end
+
+def skapa_produkt(params, userid)
+    byebug
+    titel = params["titel"]
+    description = params["description"]
+    price = params["price"]
+    image = params["img"]
+    new_name = SecureRandom.uuid + image[-4..-1]
+    db = connect()
+    FileUtils.cp(image["tempfile"].path, 'public/uploads/' + new_name)
+
+    db.execute("INSERT INTO Product (titel,description,price,userid) VALUES (?,?,?,?,?)",titel,description,price,userid,new_name)
 end

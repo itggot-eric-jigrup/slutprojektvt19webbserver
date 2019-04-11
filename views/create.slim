@@ -1,6 +1,8 @@
-form action="/create" method="POST"
-    input name="titel" type="text"
-    input name="description" type="text"
-    input name="price" type="numeric"
-    
-    //lägga till en bild också 
+h1 Lägg upp en produkt
+
+form action="/create" method="POST" enctype='multipart/form-data'
+    input name="titel" type="text" placeholder="titel"
+    input name="description" type="text" placeholder="beskrivning"
+    input name="price" type="numeric" placeholder="Pris"
+    input value="Submit" type="submit"
+    input name="img" type="file" accept="image/png, image/jpeq"
