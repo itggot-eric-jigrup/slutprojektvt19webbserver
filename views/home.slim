@@ -5,7 +5,11 @@ form action="home" method="POST"
         p Create
     a href="/profil"
         p profile
-    
+//- product.each do |Product|
+    .info
+        label = "#{Product["titel"]}"
+
+        
 //form class="navbar-form navbar-right" action="/search" method="get" id="search-form"
     class="input-group"
         input type="text" class="form-control" name="query" placeholder="search for ..."

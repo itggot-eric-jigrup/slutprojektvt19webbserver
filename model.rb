@@ -50,9 +50,10 @@ def skapa_produkt(params, userid)
     description = params["description"]
     price = params["price"]
     image = params["img"]
-    new_name = SecureRandom.uuid + image[-4..-1]
+    type = image["type"].split("/")[-1]
+    new_name = SecureRandom.uuid + "." + type
     db = connect()
     FileUtils.cp(image["tempfile"].path, 'public/uploads/' + new_name)
 
-    db.execute("INSERT INTO Product (titel,description,price,userid) VALUES (?,?,?,?,?)",titel,description,price,userid,new_name)
+    db.execute("INSERT INTO Product (titel,description,price,userid,img) VALUES (?,?,?,?,?)",titel,description,price,userid,new_name)
 end
