@@ -66,6 +66,7 @@ end
 
 post('/create') do
     skapa = skapa_produkt(params, session[:id])
+    
     redirect('/home')
 end
 
