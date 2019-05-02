@@ -70,8 +70,7 @@ end
 def add_cart(params, userid)
     id = params["product_id"]
     db = connect()
-    byebug
-    cart = db.execute("SELECT cart-id FROM Cart WHERE user-id = ?",userid)
-    db.execute("INSERT INTO ProduCart (product-id,cart-id) VALUES (?)",id,cart)
+    cart = db.execute("SELECT cart_id FROM Cart WHERE user_id = ?",userid)
+    db.execute("INSERT INTO ProduCart (product_id,cart_id) VALUES (?,?)",id,cart)
 end
 

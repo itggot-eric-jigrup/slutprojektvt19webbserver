@@ -86,5 +86,6 @@ end
 
 post('/add_to_cart/:product_id') do
     add = add_cart(params, session[:id])
+    redirect('/home')
 end
 #post('/profil') do 
