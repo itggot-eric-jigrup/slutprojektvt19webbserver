@@ -72,7 +72,7 @@ def add_cart(params, userid)
     db = connect()
     cart = db.execute("SELECT cart_id FROM Cart WHERE user_id = ?",userid)
     byebug
-    if db.execute("SELECT cart_id FROM ProduCart WHERE product_id = ?",id)
+    if db.execute("SELECT * FROM ProduCart WHERE cart_id = ?",cart.first["cart_id"])
         db.execute("INSERT INTO ProduCart (product_id,cart_id,antal) VALUES (?,?,?)",id,cart.first["cart_id"], 1)
     else
         db.execute("UPDATE ProduCart SET antal = antal + 1 WHERE cart_id = ? AND product_id = ?",id,cart.first["cart_id"])
