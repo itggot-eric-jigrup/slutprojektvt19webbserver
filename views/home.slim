@@ -5,11 +5,17 @@ form action="home" method="POST"
         p Create
     a href="/profil"
         p profile
-//- product.each do |Product|
-    .info
-        label = "#{Product["titel"]}"
+- products.each do |product|
+    p = "#{product["titel"]}" 
+    p = "#{product["description"]}"
+    p = "#{product["price"]}"
+    img src = "/uploads/#{product["img"]}"
+    form action="/add_to_cart/#{product['id']}" method="POST"
+        input value="buy" type="submit"
 
-        
+//När jag trycker på "buy" ska det läggas in i korgen med userid. men hur.
+
+
 //form class="navbar-form navbar-right" action="/search" method="get" id="search-form"
     class="input-group"
         input type="text" class="form-control" name="query" placeholder="search for ..."

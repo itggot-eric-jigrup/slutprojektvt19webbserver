@@ -31,9 +31,11 @@ get('/login') do
 end
 
 post('/login') do
-    id = login_user(params)  
+    id = login_user(params)
+    name = params["name"]  
     if id != false
         session[:id] = id
+        session[:name] = name
         redirect('/home')
     else 
         redirect('/login')
@@ -57,7 +59,10 @@ post('/registrering') do
 end
 
 get('/home') do
-    slim(:home)
+    products = get_products()
+    slim(:home, locals:{
+        products: products
+    })
 end
 
 get('/create') do
@@ -66,7 +71,7 @@ end
 
 post('/create') do
     skapa = skapa_produkt(params, session[:id])
-    
+
     redirect('/home')
 end
 
@@ -74,3 +79,12 @@ get('/profil') do
     slim(:profil)
 end
 
+get('/korg') do
+    korg = get_korg()
+    slim(:korg)
+end
+
+post('/add_to_cart/:product_id') do
+    add = add_cart(params, session[:id])
+end
+#post('/profil') do 

@@ -14,7 +14,7 @@ def login_user(params)
     #{"id" => 1, "password" = 23456768}
     password = result["password"]
     if BCrypt::Password.new(password) == pswrd
-        return result["id"]
+        return result["id"]  
     else
         return false
     end
@@ -45,7 +45,6 @@ def register_user(params)
 end
 
 def skapa_produkt(params, userid)
-    byebug
     titel = params["titel"]
     description = params["description"]
     price = params["price"]
@@ -57,3 +56,22 @@ def skapa_produkt(params, userid)
 
     db.execute("INSERT INTO Product (titel,description,price,userid,img) VALUES (?,?,?,?,?)",titel,description,price,userid,new_name)
 end
+
+def get_products()
+    db = connect()
+    result = db.execute("SELECT id, titel, description, price, userid, img FROM Product LIMIT 5")
+end
+
+#def get_korg()
+#    db = connect()
+#    result = db.execute("SELECT ")
+#end
+
+def add_cart(params, userid)
+    id = params["product_id"]
+    db = connect()
+    byebug
+    cart = db.execute("SELECT cart-id FROM Cart WHERE user-id = ?",userid)
+    db.execute("INSERT INTO ProduCart (product-id,cart-id) VALUES (?)",id,cart)
+end
+
