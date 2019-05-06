@@ -9,18 +9,25 @@ require_relative './model.rb'
 enable :sessions
 
 configure do
-    set :secure, ["/home", "/create", "/profil"]
+    set :secure, ["/home", "/create", "/profil", "/korg"]
 end
 
 before do 
     if settings.secure.any? { |elem| request.path.start_with?(elem)}
         if session[:id]
         else
-            redirect('/')
+            redirect('/login')
         end
     end
 end
 
+helpers do
+    def geterror
+        error = session[:message]
+        session[:error] = false
+        return error
+    end
+end
 get('/') do
 
     slim(:index)
@@ -31,13 +38,15 @@ get('/login') do
 end
 
 post('/login') do
-    id = login_user(params)
+    result = login_user(params)
     name = params["name"]  
-    if id != false
-        session[:id] = id
+    if result[:error] == false
+        session[:id] = result[:id]
         session[:name] = name
         redirect('/home')
     else 
+        session[:error] = true
+        session[:message] = result[:message] 
         redirect('/login')
     end
 end
@@ -79,13 +88,19 @@ get('/profil') do
     slim(:profil)
 end
 
-get('/korg') do
-    korg = get_korg()
-    slim(:korg)
-end
-
 post('/add_to_cart/:product_id') do
     add = add_cart(params, session[:id])
     redirect('/home')
 end
-#post('/profil') do 
+
+get('/korg') do
+    cart = get_cart(session[:id])
+    slim(:korg, locals:{
+        cart: cart
+    })
+end
+
+post('/Cart/Remove/:product_id') do
+    remove = remove(params, session[:id])
+    redirect('/korg')
+end

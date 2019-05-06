@@ -1,0 +1,10 @@
+a href="/profil"
+    p back
+- cart.each do |cart| 
+    p = "Antal #{cart["antal"]}"
+    p = "Titel: #{cart["titel"]}" 
+    p = "Beskrivning: #{cart["description"]}"
+    p = "Pris: #{cart["price"]} kr"
+    img src = "/uploads/#{cart["img"]}"
+    form action="Cart/Remove/#{cart['product_id']}" method="POST"
+        input value="Ta Bort" type="submit"
