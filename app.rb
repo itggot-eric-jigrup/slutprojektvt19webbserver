@@ -114,7 +114,12 @@ end
 #@see Model#skapa_produkt
 post('/create') do
     skapa = skapa_produkt(params, session[:id])
-    redirect('/home')
+    if session[:error] = false
+        redirect('/home')
+    else
+        session[:error] = create[:message]
+        redirect('/create')
+    end
 end
 
 # Display profil page

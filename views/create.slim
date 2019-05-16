@@ -6,3 +6,5 @@ form action="/create" method="POST" enctype='multipart/form-data'
     input name="price" type="numeric" placeholder="Pris"
     input name="img" type="file" accept="image/png, image/jpeq"
     input value="Submit" type="submit"
+    - if session[:error]
+        p = session[:error]

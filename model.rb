@@ -97,7 +97,10 @@ module MyModule
                 data: result.first.first
             }
         else
-            redirect('/registrering')
+            return {
+                error: true,
+                message: "not enough letter in name or password"
+            }
         end
     end
 
@@ -135,7 +138,10 @@ module MyModule
         price = params["price"]
         image = params["img"]
         if image == nil
-            redirect('/create')
+            return {
+                error: true,
+                message: "no img"
+            }
         else
             type = image["type"].split("/")[-1]
             new_name = SecureRandom.uuid + "." + type
@@ -146,7 +152,10 @@ module MyModule
 
                 db.execute("INSERT INTO Product (titel,description,price,userid,img) VALUES (?,?,?,?,?)",titel,description,price,userid,new_name)
             else 
-                redirect('/create')
+                return {
+                    error: true,
+                    message: "something empty"
+                }
             end
         end
     end
