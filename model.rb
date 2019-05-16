@@ -93,7 +93,7 @@ module MyModule
             result = db.execute("SELECT id FROM Users WHERE name = ?",name)
 
             return {
-                error: true,
+                error: false,
                 data: result.first.first
             }
         else

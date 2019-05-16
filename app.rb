@@ -85,7 +85,7 @@ post('/registrering') do
         redirect('/')
     else
         session[:error] = register[:message]
-        redirect('/')
+        redirect('/registrering')
     end
 end
 
