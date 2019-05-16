@@ -114,14 +114,10 @@ module MyModule
     def validate_new_user(params)
         name = params["name"]
         pass = params["password"]
-        if name.length < 1
-            return false
+        if name.length > 1 && pass.length > 1
+            return true
         else
-            if pass.length < 1
-                return false
-            else
-                return true
-            end
+            return false
         end
     end
 

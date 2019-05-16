@@ -11,7 +11,8 @@ enable :sessions
 include MyModule 
 
 configure do
-
+    # Setts secure routs not able to just surf into
+    #
     set :secure, ["/home", "/create", "/profil", "/korg"]
 end
 
@@ -104,7 +105,7 @@ get('/create') do
     slim(:create)
 end
 
-# Creates new product and redirects to '/home'
+# Attempts Create new product
 #
 #@param [String] titel, The title of the product
 #@param [String] description, The description of the product
@@ -117,7 +118,8 @@ post('/create') do
     if session[:error] = false
         redirect('/home')
     else
-        session[:error] = create[:message]
+        session[:error] = true
+        session[:error] = skapa[:message]
         redirect('/create')
     end
 end
