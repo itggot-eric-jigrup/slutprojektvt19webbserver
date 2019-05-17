@@ -8,7 +8,7 @@ require_relative './model.rb'
 
 enable :sessions
 
-include MyModule 
+include MyModule #Wat dis?
 
 configure do
     # Setts secure routs not able to just surf into
@@ -47,10 +47,10 @@ end
 
 # Attempt login and updates session
 #
-#@param [String] name, The username
-#@param [String] password, The password
+# @param [String] name, The username
+# @param [String] password, The password
 #
-#@see Model#login_user
+# @see Model#login_user
 post('/login') do
     result = login_user(params)
     name = params["name"]  
@@ -73,10 +73,10 @@ end
 
 # Attempts register and updates session
 #
-#@param [String] name, The username
-#@param [String] password, The password
+# @param [String] name, The username
+# @param [String] password, The password
 #
-#@see Model#register_user
+# @see Model#register_user
 post('/registrering') do
     register = register_user(params)
     
@@ -91,7 +91,7 @@ end
 
 # Display home product page
 #
-#@see Model#get_products
+# @see Model#get_products
 get('/home') do
     products = get_products()
     slim(:home, locals:{
@@ -107,12 +107,12 @@ end
 
 # Attempts Create new product
 #
-#@param [String] titel, The title of the product
-#@param [String] description, The description of the product
-#@param [String] price, The product price numeric
-#@param [File] img, The image file 
+# @param [String] titel, The title of the product
+# @param [String] description, The description of the product
+# @param [String] price, The product price numeric
+# @param [File] img, The image file 
 #
-#@see Model#skapa_produkt
+# @see Model#skapa_produkt
 post('/create') do
     skapa = skapa_produkt(params, session[:id])
     if session[:error] = false
@@ -132,7 +132,7 @@ end
 
 # Adds product to cart
 #
-#@see Model#add_cart
+# @see Model#add_cart
 post('/add_to_cart/:product_id') do
     add = add_cart(params, session[:id])
     redirect('/home')
@@ -140,7 +140,7 @@ end
 
 # Display korg
 #
-#@see Model#get_cart
+# @see Model#get_cart
 get('/korg') do
     cart = get_cart(session[:id])
     slim(:korg, locals:{
@@ -150,7 +150,7 @@ end
 
 # Removes product from cart and redirects to '/korg'
 #
-#@see Model#remove
+# @see Model#remove
 post('/Cart/Remove/:product_id') do
     remove = remove(params, session[:id])
     redirect('/korg')

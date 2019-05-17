@@ -9,19 +9,15 @@ module MyModule
 
     # Attempts to login a user
     #
-    #@param [Hash] params form data
-    #@option params [String] name The username
-    #@option params [String] password The password
+    # @param [Hash] params form data
+    # @option params [String] name The username
+    # @option params [String] password The password
     #
-    #@return [Hash]
+    # @return [Hash]
     #   * :error [Boolean] if credentials do not match user
     #   * :message [String] the error message if error occured
     #   * :id [Integer] The ID of the user
     def login_user(params)
-        username = params["name"]
-        pswrd = params["password"]
-
-        db = connect()
         val = validate_user(params)
         if val == false
             return {
@@ -29,6 +25,11 @@ module MyModule
                 message: "no such user user"
             }
         end
+        username = params["name"]
+        pswrd = params["password"]
+
+        db = connect()
+        
         result = db.execute("SELECT id, password FROM Users WHERE name = ?", username).first
         
         password = result["password"]
@@ -47,11 +48,11 @@ module MyModule
 
     # Checks user information
     #
-    #@param [Hash] params form data
-    #@option params [String] name The username
-    #@option params [String] password The password
+    # @param [Hash] params form data
+    # @option params [String] name The username
+    # @option params [String] password The password
     #
-    #@return [Boolean] whether the credentials match the user
+    # @return [Boolean] whether the credentials match the user
     def validate_user(params)
         username = params["name"]
         db = connect()
@@ -65,11 +66,11 @@ module MyModule
 
     # Attempts to create new user
     #
-    #@param [Hash] params form data
-    #@option params [String] name The username
-    #@option params [String] password The password
+    # @param [Hash] params form data
+    # @option params [String] name The username
+    # @option params [String] password The password
     #
-    #@return [Hash]
+    # @return [Hash]
     #   * :error [Boolean] whether an error occured
     #   * :messsage [String] the error message if an error occured
     def register_user(params)
@@ -104,11 +105,11 @@ module MyModule
 
     # Checks user information
     #
-    #@param [Hash] params form data
-    #@option params [String] name The username
-    #@option params [String] password The password
+    # @param [Hash] params form data
+    # @option params [String] name The username
+    # @option params [String] password The password
     #
-    #@return [Boolean] if password or name length less than 1
+    # @return [Boolean] if password or name length less than 1
     def validate_new_user(params)
         name = params["name"]
         pass = params["password"]
@@ -121,50 +122,47 @@ module MyModule
 
     # Attempts to create a new product redirect '/create'
     #
-    #@param [Hash] params and userid form data
-    #@option params [String] titel The titel
-    #@option params [String] description The description
-    #@option params [String] price The price
-    #@option params [File] img The image
+    # @param [Hash] params and userid form data
+    # @option params [String] titel The titel
+    # @option params [String] description The description
+    # @option params [String] price The price
+    # @option params [File] img The image
     def skapa_produkt(params, userid)
+        val = validate_create(params)
+        if val == false
+            return {
+                error: true,
+                message: "something empty"
+            }
+        end
         titel = params["titel"]
         description = params["description"]
         price = params["price"]
         image = params["img"]
-        if image == nil
-            return {
-                error: true,
-                message: "no img"
-            }
-        else
-            type = image["type"].split("/")[-1]
-            new_name = SecureRandom.uuid + "." + type
-            db = connect()
-            val = validate_create(params)
-            if val == false
-                return {
-                    error: true,
-                    message: "something empty"
-                }
-            end
-            FileUtils.cp(image["tempfile"].path, 'public/uploads/' + new_name)
+        type = image["type"].split("/")[-1]
+        new_name = SecureRandom.uuid + "." + type
+        db = connect()
 
-            db.execute("INSERT INTO Product (titel,description,price,userid,img) VALUES (?,?,?,?,?)",titel,description,price,userid,new_name)
-        end
+        FileUtils.cp(image["tempfile"].path, 'public/uploads/' + new_name)
+
+        db.execute("INSERT INTO Product (titel,description,price,userid,img) VALUES (?,?,?,?,?)",titel,description,price,userid,new_name)
     end
 
     # Checks product information
     #
-    #@param [Hash] params form data
-    #@option params [String] titel The titel
-    #@option params [String] description The description
-    #@option params [String] price The price
-    #@option params [File] img The image
+    # @param [Hash] params form data
+    # @option params [String] titel The titel
+    # @option params [String] description The description
+    # @option params [String] price The price
+    # @option params [File] img The image
     #
-    #@return [Hash]
+    # @return [Hash]
     #   * :error [Boolean] whether any params was empty
     def validate_create(params)
-        if params.values.any? {|elem| elem.length < 1} == true
+        image = params["img"]
+        if image == nil
+            return false
+        elsif params.values.any? {|elem| elem.length < 1} == true
             return false
         else 
             return true
