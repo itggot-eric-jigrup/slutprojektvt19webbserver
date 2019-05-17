@@ -23,25 +23,24 @@ module MyModule
 
         db = connect()
         val = validate_user(params)
-        if val == true
-            result = db.execute("SELECT id, password FROM Users WHERE name = ?", username).first
-            
-            password = result["password"]
-            if BCrypt::Password.new(password) == pswrd
-                return {
-                    error: false,
-                    id:result["id"]  
-                }
-            else
-                return {
-                    error: true,
-                    message: "Wrong password"
-                }
-            end
-        else 
+        if val == false
             return {
                 error: true,
                 message: "no such user user"
+            }
+        end
+        result = db.execute("SELECT id, password FROM Users WHERE name = ?", username).first
+        
+        password = result["password"]
+        if BCrypt::Password.new(password) != pswrd
+            return {
+                error: true,
+                message: "Wrong password"
+            }
+        else
+            return {
+                error: false,
+                id:result["id"]
             }
         end
     end
@@ -75,33 +74,32 @@ module MyModule
     #   * :messsage [String] the error message if an error occured
     def register_user(params)
         val = validate_new_user(params)
-        if val == true
-            name = params["name"]
-            password = BCrypt::Password.create(params["password"])
-
-            db = connect()
-
-            result = db.execute("SELECT id FROM Users WHERE name = ?",name)
-            if result.length > 0
-                return {
-                    error: true,
-                    message: "User already exists"
-                }
-            end
-
-            db.execute("INSERT INTO Users (name,password) VALUES (?,?)",name,password)
-            result = db.execute("SELECT id FROM Users WHERE name = ?",name)
-
-            return {
-                error: false,
-                data: result.first.first
-            }
-        else
+        if val == false
             return {
                 error: true,
                 message: "not enough letter in name or password"
             }
         end
+        name = params["name"]
+        password = BCrypt::Password.create(params["password"])
+
+        db = connect()
+
+        result = db.execute("SELECT id FROM Users WHERE name = ?",name)
+        if result.length > 0
+            return {
+                error: true,
+                message: "User already exists"
+            }
+        end
+
+        db.execute("INSERT INTO Users (name,password) VALUES (?,?)",name,password)
+        result = db.execute("SELECT id FROM Users WHERE name = ?",name)
+
+        return {
+            error: false,
+            data: result.first.first
+        }
     end
 
     # Checks user information
@@ -143,16 +141,15 @@ module MyModule
             new_name = SecureRandom.uuid + "." + type
             db = connect()
             val = validate_create(params)
-            if val == true
-                FileUtils.cp(image["tempfile"].path, 'public/uploads/' + new_name)
-
-                db.execute("INSERT INTO Product (titel,description,price,userid,img) VALUES (?,?,?,?,?)",titel,description,price,userid,new_name)
-            else 
+            if val == false
                 return {
                     error: true,
                     message: "something empty"
                 }
             end
+            FileUtils.cp(image["tempfile"].path, 'public/uploads/' + new_name)
+
+            db.execute("INSERT INTO Product (titel,description,price,userid,img) VALUES (?,?,?,?,?)",titel,description,price,userid,new_name)
         end
     end
 
