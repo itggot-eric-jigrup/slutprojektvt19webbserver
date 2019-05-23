@@ -105,7 +105,7 @@ get('/create') do
     slim(:create)
 end
 
-# Attempts Create new product
+# Attempts Create new product and redirect to home
 #
 # @param [String] titel, The title of the product
 # @param [String] description, The description of the product
@@ -131,6 +131,8 @@ get('/profil') do
 end
 
 # Adds product to cart
+#
+# @param [String] :product_id, The ID of the product
 #
 # @see Model#add_cart
 post('/add_to_cart/:product_id') do

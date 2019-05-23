@@ -178,6 +178,9 @@ module MyModule
 
     # Adds product selected to users cart database and uppdates amount if product previously had been added
     #
+    # @param [Hash] params and userid form data
+    # @option params [String] product_id, The product id
+    #
     def add_cart(params, userid)
         id = params["product_id"]
         db = connect()
