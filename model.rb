@@ -202,6 +202,9 @@ module MyModule
 
     # Removes selected product from cart
     #
+    # @param [Hash] parmas and userid from data from data 
+    # @option params [String] product_id, The Products id
+    #
     def remove(params, userid)
         id = params["product_id"]
         db = connect()

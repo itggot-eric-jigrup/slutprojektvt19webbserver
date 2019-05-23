@@ -89,7 +89,7 @@ post('/registrering') do
     end
 end
 
-# Display home product page
+# Display home product page with 5 products
 #
 # @see Model#get_products
 get('/home') do
@@ -151,6 +151,8 @@ get('/korg') do
 end
 
 # Removes product from cart and redirects to '/korg'
+#
+# @param [String] product_id, The products id
 #
 # @see Model#remove
 post('/Cart/Remove/:product_id') do
