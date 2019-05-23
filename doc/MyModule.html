@@ -394,7 +394,51 @@ previously had been added</p>
   </div>
 </div>
 <div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
   
+    <li>
+      
+        <span class='name'>params</span>
+      
+      
+        <span class='type'>(<tt>Hash</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>and userid form data</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+  
+    
+    
+    <p class="tag_title">Options Hash (<tt>params</tt>):</p>
+    <ul class="option">
+      
+        <li>
+          <span class="name">product_id,</span>
+          <span class="type">(<tt>String</tt>)</span>
+          <span class="default">
+            
+          </span>
+          
+            &mdash; <div class='inline'>
+<p>The product id</p>
+</div>
+          
+        </li>
+      
+    </ul>
+  
+    
+    
+
 
 
 
@@ -404,9 +448,6 @@ previously had been added</p>
       <pre class="lines">
 
 
-181
-182
-183
 184
 185
 186
@@ -414,10 +455,13 @@ previously had been added</p>
 188
 189
 190
-191</pre>
+191
+192
+193
+194</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'model.rb', line 181</span>
+      <pre class="code"><span class="info file"># File 'model.rb', line 184</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_add_cart'>add_cart</span><span class='lparen'>(</span><span class='id identifier rubyid_params'>params</span><span class='comma'>,</span> <span class='id identifier rubyid_userid'>userid</span><span class='rparen'>)</span>
     <span class='id identifier rubyid_id'>id</span> <span class='op'>=</span> <span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>product_id</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
@@ -511,13 +555,13 @@ cart information</p>
       <pre class="lines">
 
 
-195
-196
-197
-198</pre>
+198
+199
+200
+201</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'model.rb', line 195</span>
+      <pre class="code"><span class="info file"># File 'model.rb', line 198</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_get_cart'>get_cart</span><span class='lparen'>(</span><span class='id identifier rubyid_userid'>userid</span><span class='rparen'>)</span>
     <span class='id identifier rubyid_db'>db</span> <span class='op'>=</span> <span class='id identifier rubyid_connect'><span class='object_link'><a href="#connect-instance_method" title="MyModule#connect (method)">connect</a></span></span><span class='lparen'>(</span><span class='rparen'>)</span>
@@ -933,7 +977,67 @@ cart information</p>
   </div>
 </div>
 <div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
   
+    <li>
+      
+        <span class='name'>parmas</span>
+      
+      
+        <span class='type'>(<tt>Hash</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>and userid from data from data</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>params</span>
+      
+      
+        <span class='type'>(<tt>Hash</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>a customizable set of options</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+  
+    
+    
+    <p class="tag_title">Options Hash (<tt>params</tt>):</p>
+    <ul class="option">
+      
+        <li>
+          <span class="name">product_id,</span>
+          <span class="type">(<tt>String</tt>)</span>
+          <span class="default">
+            
+          </span>
+          
+            &mdash; <div class='inline'>
+<p>The Products id</p>
+</div>
+          
+        </li>
+      
+    </ul>
+  
+    
+    
+
 
 
 
@@ -943,14 +1047,14 @@ cart information</p>
       <pre class="lines">
 
 
-202
-203
-204
-205
-206</pre>
+208
+209
+210
+211
+212</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'model.rb', line 202</span>
+      <pre class="code"><span class="info file"># File 'model.rb', line 208</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_remove'>remove</span><span class='lparen'>(</span><span class='id identifier rubyid_params'>params</span><span class='comma'>,</span> <span class='id identifier rubyid_userid'>userid</span><span class='rparen'>)</span>
     <span class='id identifier rubyid_id'>id</span> <span class='op'>=</span> <span class='id identifier rubyid_params'>params</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>product_id</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
@@ -1542,7 +1646,7 @@ cart information</p>
 </div>
 
       <div id="footer">
-  Generated on Fri May 17 15:59:59 2019 by
+  Generated on Thu May 23 10:32:19 2019 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.19 (ruby-2.4.2).
 </div>

@@ -50,7 +50,7 @@ end
 # @param [String] name, The username
 # @param [String] password, The password
 #
-# @see Model#login_user
+# @see MyModel#login_user
 post('/login') do
     result = login_user(params)
     name = params["name"]  
@@ -76,7 +76,7 @@ end
 # @param [String] name, The username
 # @param [String] password, The password
 #
-# @see Model#register_user
+# @see MyModel#register_user
 post('/registrering') do
     register = register_user(params)
     
@@ -91,7 +91,7 @@ end
 
 # Display home product page with 5 products
 #
-# @see Model#get_products
+# @see MyModel#get_products
 get('/home') do
     products = get_products()
     slim(:home, locals:{
@@ -112,7 +112,7 @@ end
 # @param [String] price, The product price numeric
 # @param [File] img, The image file 
 #
-# @see Model#skapa_produkt
+# @see MyModel#skapa_produkt
 post('/create') do
     skapa = skapa_produkt(params, session[:id])
     if session[:error] = false
@@ -134,7 +134,7 @@ end
 #
 # @param [String] :product_id, The ID of the product
 #
-# @see Model#add_cart
+# @see MyModel#add_cart
 post('/add_to_cart/:product_id') do
     add = add_cart(params, session[:id])
     redirect('/home')
@@ -142,7 +142,7 @@ end
 
 # Display korg
 #
-# @see Model#get_cart
+# @see MyModel#get_cart
 get('/korg') do
     cart = get_cart(session[:id])
     slim(:korg, locals:{
@@ -154,7 +154,7 @@ end
 #
 # @param [String] product_id, The products id
 #
-# @see Model#remove
+# @see MyModel#remove
 post('/Cart/Remove/:product_id') do
     remove = remove(params, session[:id])
     redirect('/korg')
